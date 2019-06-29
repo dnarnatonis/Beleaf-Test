@@ -107,7 +107,7 @@ Seguindo a mesma ideia de manter a API universalmente utilizável, todas as resp
 
 Todos os _endpoints_ de UPDATE (PUT), vale ressaltar, suportam _body_ de dados JSON parciais para update de campos específicos.
 
-Ainda considerando informações gerais, todas as requisições, exceto as envolvidas em autenticação de usuário, deverão conter o cabeçalho HTTP `"Authorization"`, portando o _bearer token_ __JWT__ (_JSON Web Token_) fornecido pela API de autenticação.
+Ainda considerando informações gerais, todas as requisições, exceto as envolvidas em autenticação de usuário, deverão conter o cabeçalho HTTP `Authorization`, portando o _bearer token_ __JWT__ (_JSON Web Token_) fornecido pela API de autenticação.
 
 ``` bash
 https://us-central1-beleaf-test.cloudfunctions.net/api/v1
@@ -115,14 +115,16 @@ https://us-central1-beleaf-test.cloudfunctions.net/api/v1
 
 ### Autenticação
 
-Todas as transações não relativas à autenticação, como já mencionado, deverão conter o cabeçalho `"Authorization"`, onde o cliente fornecerá um _Bearer Token_ JWT que confirmará a identidade do usuário requisitando o revurso. Este _token_ terá, por padrão estabelecido pelo serviço de autenticação do Google Firebase, validade por 01 (uma) hora e será fornecido através da API de autenticação, que também contém um _endpoint_ para _refresh_ do _idToken_.
+Todas as transações não relativas à autenticação, como já mencionado, deverão conter o cabeçalho `Authorization`, onde o cliente fornecerá um _Bearer Token_ JWT que confirmará a identidade do usuário requisitando o revurso. Este _token_ terá, por padrão estabelecido pelo serviço de autenticação do Google Firebase, validade por 01 (uma) hora e será fornecido através da API de autenticação, que também contém um _endpoint_ para _refresh_ do _idToken_.
 
 #### /auth/login
 
 ##### Request
 
 - Headers:
-`Content-Type: "application/json"`
+```
+"Content-Type": "application/json"
+```
 
 - Body:
 ```
@@ -145,7 +147,42 @@ Em resposta, a API devolverá dois tokens: um `idToken`, que será utilizado em 
     "email": "String",
     "displayName": "String",
     "idToken": "String",
-    "registered": true,
+    "registered": "Boolean",
+    "refreshToken": "String",
+    "expiresIn": "String"
+  }
+```
+
+#### /auth/refresh
+
+##### Request
+
+- Headers:
+```
+"Content-Type": "application/json"
+```
+
+- Body:
+```
+  {
+    "refreshToken": "String"
+  }
+```
+
+##### Response
+
+Em resposta, a API devolverá dois tokens: um `idToken`, que será utilizado em todas as requisições; e um `refreshToken`, que será utilizado para conseguir um novo _token_ caso o anterior expire.
+
+- Status: 200
+- Body:
+```
+  {
+    "kind": "String",
+    "localId": "String",
+    "email": "String",
+    "displayName": "String",
+    "idToken": "String",
+    "registered": "Boolean",
     "refreshToken": "String",
     "expiresIn": "String"
   }
