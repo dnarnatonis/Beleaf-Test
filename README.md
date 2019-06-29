@@ -97,4 +97,59 @@ $ npm run dev
 ```
 
 ---
+## API
+
+### Considerações Gerais
+
+A API segue padrões __REST__ (_Representational State Transfer_), utilizando nomes ao invés de verbos na convenção de nomenclatura, a fim de facilitar o consumo universal, além de padronizar URIs para que um objeto seja unicamente representado pelas mesmas.
+
+Seguindo a mesma ideia de manter a API universalmente utilizável, todas as respostas são padronizadas em __JSON__ (_JavaScript Object Notation_), que conterá apenas informações sobre o objeto de dados requisitado, enquanto informações sobre as transações estarão contidas no cabeçalho de resposta, salvo em caso de erro, ou seja, HTTP Status de resposta fora do range 200-299.
+
+Todos os _endpoints_ de UPDATE (PUT), vale ressaltar, suportam _body_ de dados JSON parciais para update de campos específicos.
+
+Ainda considerando informações gerais, todas as requisições, exceto as envolvidas em autenticação de usuário, deverão conter o cabeçalho HTTP `"Authorization"`, portando o _bearer token_ __JWT__ (_JSON Web Token_) fornecido pela API de autenticação.
+
+``` bash
+https://us-central1-beleaf-test.cloudfunctions.net/api/v1
+```
+
+### Autenticação
+
+Todas as transações não relativas à autenticação, como já mencionado, deverão conter o cabeçalho `"Authorization"`, onde o cliente fornecerá um _Bearer Token_ JWT que confirmará a identidade do usuário requisitando o revurso. Este _token_ terá, por padrão estabelecido pelo serviço de autenticação do Google Firebase, validade por 01 (uma) hora e será fornecido através da API de autenticação, que também contém um _endpoint_ para _refresh_ do _idToken_.
+
+#### /auth/login
+
+##### Request
+
+- Headers:
+`Content-Type: "application/json"`
+
+- Body:
+```
+  {
+    "email": "String",
+    "password": "String"
+  }
+```
+
+##### Response
+
+Em resposta, a API devolverá dois tokens: um `idToken`, que será utilizado em todas as requisições; e um `refreshToken`, que será utilizado para conseguir um novo _token_ caso o anterior expire.
+
+- Status: 200
+- Body:
+```
+  {
+    "kind": "String",
+    "localId": "String",
+    "email": "String",
+    "displayName": "String",
+    "idToken": "String",
+    "registered": true,
+    "refreshToken": "String",
+    "expiresIn": "String"
+  }
+```
+
+---
 © 2019 Danilo Narnatonis
