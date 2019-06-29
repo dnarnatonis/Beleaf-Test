@@ -1,0 +1,24 @@
+{
+  "name": "beleaf-test",
+  "version": "1.0.0",
+  "description": "A test application for Beleaf's selection process.",
+  "author": "Danilo Narnatonis",
+  "private": true,
+  "scripts": {
+    "lint": "cd ./nuxt && eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "cd ./nuxt && npm run lint",
+    "dev": "cd ./nuxt && nuxt",
+    "build": "cd ./nuxt && nuxt build",
+    "start": "cd ./nuxt && nuxt start",
+    "generate": "cd ./nuxt && nuxt generate",
+    "setup": "npm run setup:base && npm run setup:nuxt && npm run setup:functions",
+    "setup:base": "npm i",
+    "setup:nuxt": "cd ./nuxt && npm i",
+    "setup:functions": "cd ./functions && npm i"
+  },
+  "dependencies": {
+    "firebase-tools": "^7.0.2",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {}
+}

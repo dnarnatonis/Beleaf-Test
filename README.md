@@ -28,7 +28,7 @@ Para elaboração do front-end, utilizamos o _stack_ do [Nuxt.js](https://nuxtjs
 
 Como configuração personalizada, optamos pelos os seguintes componentes:
 
--  [Vuetify](https://github.com/vuetifyjs/vuetify) _(UI Framework)_
+-  [Buefy](https://buefy.org/) _(UI Framework)_
 
 -  [EsLint](https://eslint.org/) _(Linting tool)_
 
@@ -51,11 +51,6 @@ $ npm -v
 
 ```bash
 $ git --version
-```
-
-- Instale as ferramentas de linha de comando _CLI_ do _Firebase_
-```bash
-$ npm install -g firebase-tools
 ```
 
 - Baixe o projeto do repositório
@@ -90,7 +85,7 @@ Este diretório contém todos os arquivos pertinentes às _functions_ do [Fireba
 
 Aqui se encontram os arquivos estáticos exportados pelo [webpack](https://github.com/webpack/webpack). Este é o diretório que é transferido para o [Firebase Hosting](https://firebase.google.com/products/hosting/).
 
-- __./src__
+- __./nuxt__
 
 Este diretório contém o código fonte da aplicação [Nuxt.js](https://nuxtjs.org/). As pastas internas contém READMEs específicos do próprio [Nuxt.js](https://nuxtjs.org/).
 
